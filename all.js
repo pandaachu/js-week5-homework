@@ -2,6 +2,15 @@
 // 全域註冊 VueLoading
 Vue.component('loading', VueLoading);
 
+Vue.component('ValidationProvider', VeeValidate.ValidationProvider);
+Vue.component('ValidationObserver', VeeValidate.ValidationObserver);
+VeeValidate.configure({
+  classes: {
+    valid: 'is-valid',
+    invalid: 'is-invalid',
+  }
+});
+
 new Vue({
   el: '#app',
   data: {
@@ -15,6 +24,14 @@ new Vue({
     }, // 讀取效果
     uuid: '289038e7-cea7-4a49-afd4-86ec766c3f7f',
     apiPath: 'https://course-ec-api.hexschool.io',
+    form: {
+      username: '',
+      email: '',
+      phone: '',
+      address: '',
+      payment: '',
+      message: '',
+    },
   },
   methods: {
     //取出產品列表
@@ -44,6 +61,7 @@ new Vue({
       .then(res => {
         this.isLoading = false;
         console.log(res);
+        this.getCart() ;
       })
       .catch(error =>{
         this.isLoading = false;
@@ -106,6 +124,31 @@ new Vue({
         // axios 固定的寫法，否則 error 訊息不會出現
         console.log(error.response);
       })
+    },
+    // removeItem(id) {
+    //   const url = `${this.apiPath}/api/${this.uuid}/ec/shopping/${id}`;
+    //   this.isLoading = true;
+    //   axios
+    //   .delete(url)
+    //   .then(res => {
+    //     this.isLoading = false;
+    //     this.getCart();
+    //     this.updateTotal()
+    //   });
+    // },
+    // deleteAll(){
+    // this.isLoading = true;
+    // const url = `${this.apiPath}/api/${this.uuid}/ec/shopping/all/product`;
+    // axios.delete(url)
+    //   .then(res => {
+    //     this.isLoading = false;
+    //     this.getCart();
+    //   });
+    //   // console.log(this.total_cost)
+    //   this.cartTotal=0;
+    // },
+    sendOrder(){
+      alert("訂單完成");
     }
   },
   created() {
